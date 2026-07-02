@@ -73,8 +73,8 @@ runcmd:
 	- proxychains4 apt-get update
 	- proxychains4 apt-get install -y tailscale
 	- ['sh', '-c', "echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && sysctl -p /etc/sysctl.d/99-tailscale.conf" ]
-    - systemctl enable ssh
-    - reboot
+	- systemctl enable ssh    
+	- reboot
 # Taken from https://forum.proxmox.com/threads/combining-custom-cloud-init-with-auto-generated.59008/page-3#post-428772
 EOF
 
