@@ -6,6 +6,8 @@ VMID="${VMID:-8500}"
 STORAGE="${STORAGE:-local-lvm}"
 VMUSER="${VMUSER:-ubuntu}"
 VMDISKSIZE="${VMDISKSIZE:-20G}"
+VMCORES="${VMCORES:-2}"
+VMMEMORY="${VMMEMORY:-2048}"
 
 
 if [ -z "$SOCKS5_config" ]; then
@@ -46,10 +48,10 @@ qemu-img resize noble-server-cloudimg-amd64-resized.img $VMDISKSIZE
 
 qm destroy $VMID || true
 qm create $VMID --name "ubuntu-noble-template" --ostype l26 \
-    --memory 1024 --balloon 0 \
+    --memory $VMMEMORY --balloon 0 \
     --agent 1 \
     --bios ovmf --machine q35 --efidisk0 $STORAGE:0,pre-enrolled-keys=0 \
-    --cpu host --socket 1 --cores 1 \
+    --cpu host --socket 1 --cores $VMCORES \
     --vga serial0 --serial0 socket  \
     --net0 virtio,bridge=vmbr0
 qm importdisk $VMID noble-server-cloudimg-amd64-resized.img $STORAGE
