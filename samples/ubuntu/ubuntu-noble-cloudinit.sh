@@ -84,6 +84,7 @@ cat << EOF | tee /var/lib/vz/snippets/ubuntu-noble.yaml
 runcmd:
     - apt-get update
     - apt-get install -y qemu-guest-agent
+    - apt-get install -y ansible
     - apt-get install -y proxychains4
     - sed -i 's/^socks4[[:space:]]\+127\.0\.0\.1[[:space:]]\+[0-9]\+.*/${ESCAPED_SOCKS5}/' /etc/proxychains4.conf
     - proxychains4 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
