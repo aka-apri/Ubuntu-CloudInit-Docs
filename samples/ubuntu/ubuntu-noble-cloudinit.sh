@@ -68,15 +68,15 @@ cat << EOF | tee /var/lib/vz/snippets/ubuntu-noble.yaml
 runcmd:
     - apt-get update
     - apt-get install -y qemu-guest-agent
-	- apt-get install -y proxychains4
-	- sed -i 's/^socks4[[:space:]]\+127\.0\.0\.1[[:space:]]\+[0-9]\+.*/${ESCAPED_SOCKS5}/' /etc/proxychains4.conf
-	- proxychains4 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
-	- proxychains4 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
-	- proxychains4 apt-get update
-	- proxychains4 apt-get install -y tailscale
-	- ['sh', '-c', "echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && sysctl -p /etc/sysctl.d/99-tailscale.conf" ]
-	- systemctl enable ssh    
-	- reboot
+    - apt-get install -y proxychains4
+    - sed -i 's/^socks4[[:space:]]\+127\.0\.0\.1[[:space:]]\+[0-9]\+.*/${ESCAPED_SOCKS5}/' /etc/proxychains4.conf
+    - proxychains4 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+    - proxychains4 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
+    - proxychains4 apt-get update
+    - proxychains4 apt-get install -y tailscale
+    - ['sh', '-c', "echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.d/99-tailscale.conf && sysctl -p /etc/sysctl.d/99-tailscale.conf" ]
+    - systemctl enable ssh    
+    - reboot
 # Taken from https://forum.proxmox.com/threads/combining-custom-cloud-init-with-auto-generated.59008/page-3#post-428772
 EOF
 
