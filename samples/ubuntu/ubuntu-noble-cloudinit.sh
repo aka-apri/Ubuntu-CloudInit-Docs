@@ -17,7 +17,13 @@ if [ -z "$SOCKS5_config" ]; then
     exit 1
 fi
 
-ESCAPED_SOCKS5=$(echo "$SOCKS5_config" | sed 's/"/\\"/g')
+# Функция для экранирования специальных символов для sed
+escape_sed() {
+    echo "$1" | sed -e 's/[\/&]/\\&/g' -e 's/[$]/\\$/g' -e 's/[()]/\\&/g' -e 's/[{}]/\\&/g' -e 's/[|]/\\|/g' -e 's/[?]/\\?/g' -e 's/[+]/\\+/g' -e 's/[.]/\\./g' -e 's/[[]/\\[/g' -e 's/[]]/\\]/g' -e 's/[*]/\\*/g' -e 's/[^]/\\^/g'
+}
+
+# Экранируем значение для использования в sed
+ESCAPED_SOCKS5=$(escape_sed "$SOCKS5_config")
 
 IMG="noble-server-cloudimg-amd64.img"
 BASE_URL="https://cloud-images.ubuntu.com/noble/current"
